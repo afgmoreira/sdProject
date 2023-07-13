@@ -1,0 +1,1102 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Formula 1 API",
+    "description": "API for Formula 1 World Championship data",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Local server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "circuit",
+      "description": "Operations related to circuits"
+    },
+    {
+      "name": "location",
+      "description": "Operations related to locations"
+    },
+    {
+      "name": "country",
+      "description": "Operations related to countries"
+    },
+    {
+      "name": "user",
+      "description": "Operations related to users"
+    }
+  ],
+  "paths": {
+    "/circuits": {
+      "get": {
+        "tags": [
+          "circuit"
+        ],
+        "summary": "Get all circuits",
+        "operationId": "getCircuits",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Circuit"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Circuits not found"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "circuit"
+        ],
+        "summary": "Create a new circuit",
+        "operationId": "createCircuit",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CircuitInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Circuit created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Circuit"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "This Circuit can't be Created (Bad Request)"
+          },
+          "401": {
+            "description": "You don't have permission to execute this request (Unauthorized)"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      }
+    },
+    "/circuits/{circuitId}": {
+      "get": {
+        "tags": [
+          "circuit"
+        ],
+        "summary": "Get a circuit by ID",
+        "operationId": "getCircuitById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "circuitId",
+            "in": "path",
+            "description": "ID of the circuit",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Circuit"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Circuit not found"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "circuit"
+        ],
+        "summary": "Update a circuit by ID",
+        "operationId": "updateCircuitById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "circuitId",
+            "in": "path",
+            "description": "ID of the circuit",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CircuitInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Circuit updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Circuit"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Circuit not found"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "circuit"
+        ],
+        "summary": "Delete a circuit by ID",
+        "operationId": "deleteCircuitById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "circuitId",
+            "in": "path",
+            "description": "ID of the circuit",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Circuit deleted successfully"
+          },
+          "404": {
+            "description": "Circuit not found"
+          }
+        }
+      }
+    },
+    "/circuits/{circuitId}/location": {
+      "get": {
+        "tags": [
+          "circuit"
+        ],
+        "summary": "Get the location of a circuit by ID",
+        "operationId": "getCircuitLocationById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "circuitId",
+            "in": "path",
+            "description": "ID of the circuit",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Location"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Circuit not found"
+          }
+        }
+      }
+    },
+    "/circuits/{circuitId}/country": {
+      "get": {
+        "tags": [
+          "circuit"
+        ],
+        "summary": "Get the country of a circuit by ID",
+        "operationId": "getCircuitCountryById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "circuitId",
+            "in": "path",
+            "description": "ID of the circuit",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Country"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Circuit not found"
+          }
+        }
+      }
+    },
+    "/locations": {
+      "get": {
+        "tags": [
+          "location"
+        ],
+        "summary": "Get all locations",
+        "operationId": "getLocations",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Location"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "location"
+        ],
+        "summary": "Create a new location",
+        "operationId": "createLocation",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocationInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Location created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Location"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "This Location can't be Created (Bad Request)"
+          },
+          "401": {
+            "description": "You don't have permission to execute this request (Unauthorized)"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      }
+    },
+    "/locations/{locationId}": {
+      "get": {
+        "tags": [
+          "location"
+        ],
+        "summary": "Get a location by ID",
+        "operationId": "getLocationById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "locationId",
+            "in": "path",
+            "description": "ID of the location",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Location"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Location not found"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "location"
+        ],
+        "summary": "Update a location by ID",
+        "operationId": "updateLocationById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "locationId",
+            "in": "path",
+            "description": "ID of the location",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocationInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Location updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Location"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Location not found"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "location"
+        ],
+        "summary": "Delete a location by ID",
+        "operationId": "deleteLocationById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "locationId",
+            "in": "path",
+            "description": "ID of the location",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Location deleted successfully"
+          },
+          "404": {
+            "description": "Location not found"
+          }
+        }
+      }
+    },
+    "/countries": {
+      "get": {
+        "tags": [
+          "country"
+        ],
+        "summary": "Get all countries",
+        "operationId": "getCountries",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Country"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "country"
+        ],
+        "summary": "Create a new country",
+        "operationId": "createCountry",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CountryInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Country created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Country"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "This Country can't be Created (Bad Request)"
+          },
+          "401": {
+            "description": "You don't have permission to execute this request (Unauthorized)"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      }
+    },
+    "/countries/{countryId}": {
+      "get": {
+        "tags": [
+          "country"
+        ],
+        "summary": "Get a country by ID",
+        "operationId": "getCountryById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "countryId",
+            "in": "path",
+            "description": "ID of the country",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Country"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Country not found"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "country"
+        ],
+        "summary": "Update a country by ID",
+        "operationId": "updateCountryById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "countryId",
+            "in": "path",
+            "description": "ID of the country",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CountryInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Country updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Country"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Country not found"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "country"
+        ],
+        "summary": "Delete a country by ID",
+        "operationId": "deleteCountryById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "countryId",
+            "in": "path",
+            "description": "ID of the country",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Country deleted successfully"
+          },
+          "404": {
+            "description": "Country not found"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "User's Login",
+        "operationId": "userLogin",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username or password"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get the information of all Users",
+        "operationId": "getAllUsers",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create User",
+        "operationId": "createUser",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "This User can't be Created (Bad Request)"
+          },
+          "401": {
+            "description": "You don't have permission to execute this request (Unauthorized)"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get info about User",
+        "operationId": "getUserById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Delete a specific User",
+        "operationId": "deleteUserById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted successfully"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update a specific User",
+        "operationId": "updateUserById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "An error occurred on the server (Internal Server Error)"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Circuit": {
+        "type": "object",
+        "properties": {
+          "circuitId": {
+            "type": "string"
+          },
+          "circuitRef": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "lat": {
+            "type": "string"
+          },
+          "lng": {
+            "type": "string"
+          },
+          "alt": {
+            "type": "number"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "CircuitInput": {
+        "type": "object",
+        "properties": {
+          "circuitRef": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "lat": {
+            "type": "string"
+          },
+          "lng": {
+            "type": "string"
+          },
+          "alt": {
+            "type": "number"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "Location": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          }
+        }
+      },
+      "LocationInput": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string"
+          }
+        }
+      },
+      "Country": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        }
+      },
+      "CountryInput": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "UserInput": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginInput": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
