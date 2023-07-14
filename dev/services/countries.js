@@ -8,18 +8,18 @@ module.exports = {
     `).then(q => q.rows);
   },
 
-  getById: async (countryId) => {
+  getById: async (id) => {
     const countries = await db.query(`
       SELECT *
       FROM countries
-      WHERE countryId = $1
-    `, [countryId]).then(q => q.rows);
+      WHERE id = $1
+    `, [id]).then(q => q.rows);
 
     if (countries.length > 0) {
       return countries[0];
     }
 
-    throw new Error(`Country with countryId='${countryId}' not found!`);
+    throw new Error(`Country with countryId='${id}' not found!`);
   },
 
   create: async ({ country }) => {
@@ -30,20 +30,20 @@ module.exports = {
     `, [country]).then(q => q.rows[0]);
   },
 
-  updateById: async (countryId, { country }) => {
+  updateById: async (id, { country }) => {
     return db.query(`
       UPDATE countries
       SET country = $2
-      WHERE countryId = $1
+      WHERE id = $1
       RETURNING *
-    `, [countryId, country]).then(q => q.rows[0]);
+    `, [id, country]).then(q => q.rows[0]);
   },
 
-  deleteById: async (countryId) => {
+  deleteById: async (id) => {
     return db.query(`
       DELETE FROM countries
-      WHERE countryId = $1
+      WHERE id = $1
       RETURNING *
-    `, [countryId]).then(q => q.rows[0]);
+    `, [id]).then(q => q.rows[0]);
   }
 };

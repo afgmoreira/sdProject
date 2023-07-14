@@ -8,18 +8,18 @@ module.exports = {
     `).then(q => q.rows);
   },
 
-  getById: async (locationId) => {
+  getById: async (id) => {
     const locations = await db.query(`
       SELECT *
       FROM locations
-      WHERE locationId = $1
-    `, [locationId]).then(q => q.rows);
+      WHERE id = $1
+    `, [id]).then(q => q.rows);
 
     if (locations.length > 0) {
       return locations[0];
     }
 
-    throw new Error(`Location with locationId='${locationId}' not found!`);
+    throw new Error(`Location with locationId='${id}' not found!`);
   },
 
   create: async ({ location }) => {
@@ -30,20 +30,20 @@ module.exports = {
     `, [location]).then(q => q.rows[0]);
   },
 
-  updateById: async (locationId, { location }) => {
+  updateById: async (id, { location }) => {
     return db.query(`
       UPDATE locations
       SET location = $2
-      WHERE locationId = $1
+      WHERE id = $1
       RETURNING *
-    `, [locationId, location]).then(q => q.rows[0]);
+    `, [id, location]).then(q => q.rows[0]);
   },
 
-  deleteById: async (locationId) => {
+  deleteById: async (id) => {
     return db.query(`
       DELETE FROM locations
-      WHERE locationId = $1
+      WHERE id = $1
       RETURNING *
-    `, [locationId]).then(q => q.rows[0]);
+    `, [id]).then(q => q.rows[0]);
   }
 };

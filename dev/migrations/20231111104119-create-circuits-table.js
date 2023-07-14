@@ -1,7 +1,7 @@
 exports.up = function (knex) {
   return knex.schema.createTable('circuits', function (table) {
-    table.string('circuit_id').primary();
-    table.string('circuit_ref');
+    table.string('circuitId').primary();
+    table.string('circuitRef');
     table.string('name');
     table.string('lat');
     table.string('lng');

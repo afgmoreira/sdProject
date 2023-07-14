@@ -1,71 +1,104 @@
 const express = require("express");
-const cors = require('cors');
-const swaggerUI = require('swagger-ui-express');
+const cors = require("cors");
+const swaggerUI = require("swagger-ui-express");
+const bodyParser = require("body-parser");
+const jwt = require("jsonwebtoken");
 
-const config = require('./config');
+const config = require("./config");
 const swaggerConfig = {
-    ...require("./doc/swagger.json"),
-    host:       `${config.hostname}:${config.port}`,
-    basePath:   `${config.baseUrl}`
+  ...require("./doc/swagger.json"),
+  host: `${config.hostname}:${config.port}`,
+  basePath: `${config.baseUrl}`,
 };
-
 
 const apiUrl = require("./api-url");
 const controllers = require("./controllers");
 const swaggerDocument = require("./doc/swagger.json");
 const swaggerUi = require("swagger-ui-express");
 
-
 const app = express();
 app.use(express.json());
-app.use(cors({credentials: true, origin: true}));
-app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
+app.use(cors({ credentials: true, origin: true }));
+app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerConfig));
+app.use(bodyParser.urlencoded({ extended: false }));
 
+function checkRole(checkedRole) {
+  const roles = {
+    viewer: 0,
+    editor: 1,
+    admin: 2,
+  };
+
+  return (req, res, next) => {
+    // Check if the required role is specified
+    if (!checkedRole) {
+      return next();
+    }
+
+    // Get the token from the Authorization header
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+
+    // If token is not provided, return Unauthorized
+    if (!token) {
+      return res.status(401).send("Unauthorized: Token not provided");
+    }
+
+    try {
+      // Verify the token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      // Check if the user role is equal to or higher than the required role
+      if (roles[decoded.role] >= roles[checkedRole]) {
+        req.user = decoded; // Attach user information to the request object
+        return next();
+      }
+
+      return res.status(401).send("Unauthorized: You don´t have permission");
+    } catch (err) {
+      return res.status(401).send("Unauthorized: Invalid token");
+    }
+  };
+}
 
 [
-    { method: "get",    url: "version",                         cb: controllers.version.get },
+  // Add your routes here with requiredRole parameter
+  { method: "get", url: "version", cb: controllers.version.get },
 
-    //circuits
+  // Circuits Access Methods
+  { method: "get", url: "circuits", cb: controllers.circuits.getAll, requiredRole: "viewer" },
+  { method: "get", url: "circuits/:circuitId", cb: controllers.circuits.getById, requiredRole: "viewer" },
+  { method: "post", url: "circuits", cb: controllers.circuits.create, requiredRole: "editor" },
+  { method: "put", url: "circuits/:circuitId", cb: controllers.circuits.updateById, requiredRole: "editor" },
+  { method: "delete", url: "circuits/:circuitId", cb: controllers.circuits.deleteById, requiredRole: "editor" },
+  { method: "get", url: "circuits/:circuitId/location", cb: controllers.circuits.getLocationById, requiredRole: "viewer" },
+  { method: "get", url: "circuits/:circuitId/country", cb: controllers.circuits.getCountryById, requiredRole: "viewer" },
 
-    { method: "get",    url: "circuits",                        cb: controllers.circuits.getAll },
-    { method: "get",    url: "circuits/:circuitId",             cb: controllers.circuits.getById },
-    { method: "post",   url: "circuits",                        cb: controllers.circuits.create}, 
-    { method: "put",    url: "circuits/:circuitId",             cb: controllers.circuits.updateById},
-    { method: "delete", url: "circuits/:circuitId",             cb: controllers.circuits.deleteById},
-    { method: "get",    url: "circuits/:circuitId/location",    cb: controllers.circuits.getLocationById},
-    { method: "get",    url: "circuits/:circuitId/country",     cb: controllers.circuits.getCountryById},
+  // Locations Access Methods
+  { method: "get", url: "locations", cb: controllers.locations.getAll, requiredRole: "viewer" },
+  { method: "get", url: "locations/:circuitId", cb: controllers.locations.getById, requiredRole: "viewer" },
+  { method: "post", url: "locations", cb: controllers.locations.create, requiredRole: "editor" },
+  { method: "put", url: "locations/:locationId", cb: controllers.locations.updateById, requiredRole: "editor" },
+  { method: "delete", url: "locations/:locationId", cb: controllers.locations.deleteById, requiredRole: "editor" },
 
+  // Countries Access Methods
+  { method: "get", url: "countries", cb: controllers.countries.getAll, requiredRole: "viewer" },
+  { method: "get", url: "countries/:countryId", cb: controllers.countries.getById, requiredRole: "viewer" },
+  { method: "post", url: "countries", cb: controllers.countries.create, requiredRole: "editor" },
+  { method: "put", url: "countries/:countryId", cb: controllers.countries.updateById, requiredRole: "editor" },
+  { method: "delete", url: "countries/:countryId", cb: controllers.countries.deleteById, requiredRole: "editor" },
 
-    //locations
+  // Users Access Methods
+  { method: "post", url: "users/login", cb: controllers.users.login },
+  { method: "get", url: "users", cb: controllers.users.getAll, requiredRole: "admin" },
+  { method: "post", url: "users", cb: controllers.users.create, requiredRole: "admin" },
+  { method: "put", url: "users/:userId", cb: controllers.users.updateById, requiredRole: "admin" },
+  { method: "delete", url: "users/:userId", cb: controllers.users.deleteById, requiredRole: "admin" },
 
-    { method: "get",    url: "locations",                       cb: controllers.locations.getAll },
-    { method: "get",    url: "locations/:circuitId",            cb: controllers.locations.getById },
-    { method: "post",   url: "locations",                       cb: controllers.locations.create}, 
-    { method: "put",    url: "locations/:locationId",           cb: controllers.locations.updateById},
-    { method: "delete", url: "locations/:locationId",           cb: controllers.locations.deleteById},
-
-    //countries
-
-    { method: "get",    url: "countries",                       cb: controllers.countries.getAll },
-    { method: "get",    url: "countries/:countryId",            cb: controllers.countries.getById },
-    { method: "post",   url: "countries",                       cb: controllers.countries.create}, 
-    { method: "put",    url: "countries/:countryId",            cb: controllers.countries.updateById},
-    { method: "delete", url: "countries/:countryId",            cb: controllers.countries.deleteById},
-
-
-    //users
-
-    { method: "post",   url: "users/login",                     cb: controllers.users.login},
-    { method: "get",    url: "users",                           cb: controllers.users.getAll},
-    { method: "post",    url: "users",                          cb: controllers.users.create },
-    { method: "put",    url: "users/:userId",                   cb: controllers.users.updateById},
-    { method: "delete", url: "users/:userId",                   cb: controllers.users.deleteById},
-    
-
-].forEach(({method, url, cb}) => {
-    app[method](apiUrl(url), cb);
+].forEach(({ method, url, checkedRole, cb }) => {
+  app[method](apiUrl(url), checkRole(checkedRole), cb);
 });
 
 app.listen(config.port, () => {
-    console.log(`api is listening on port ${config.port}!`)
+  console.log(`api is listening on port ${config.port}!`);
 });

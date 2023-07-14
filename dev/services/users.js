@@ -67,4 +67,19 @@ module.exports = {
   },
 
 
+  getByUsername: async (username) => {
+    const users = await db.query(`
+      SELECT *
+      FROM users
+      WHERE username = $1
+    `, [username]).then(q => q.rows);
+
+    if (users.length > 0) {
+      return users[0];
+    }
+
+    return null;
+  }
+
+
 };
