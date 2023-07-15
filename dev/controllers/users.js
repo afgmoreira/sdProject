@@ -13,7 +13,7 @@ module.exports = {
 
   getUserById: async (req, res) => {
     try {
-      const user = await services.users.getById(req.params.userId);
+      const user = await services.users.getById(req.params.id);
       if (user) {
         res.status(200).send(user);
       } else {
@@ -67,7 +67,7 @@ module.exports = {
     try {
       const { username, password, role } = req.body;
   
-      const updatedUser = await services.users.updateById(req.params.userId, {
+      const updatedUser = await services.users.updateById(req.params.id, {
         username,
         password,
         role,
@@ -85,7 +85,7 @@ module.exports = {
   
   deleteById: async (req, res) => {
     try {
-      const deletedUser = await services.users.deleteById(req.params.userId);
+      const deletedUser = await services.users.deleteById(req.params.id);
       if (!deletedUser) {
         res.status(404).send({ error: "User not found" });
       } else {

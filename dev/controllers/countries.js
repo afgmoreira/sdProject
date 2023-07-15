@@ -12,7 +12,7 @@ module.exports = {
 
   getById: async (req, res) => {
     try {
-      const country = await services.countries.getById(req.params.countryId);
+      const country = await services.countries.getById(req.params.id);
       if (!country) {
         res.status(404).send({ error: "Country not found" });
       } else {
@@ -37,7 +37,7 @@ module.exports = {
     try {
       const { country } = req.body;
       const updatedCountry = await services.countries.updateById(
-        req.params.countryId,
+        req.params.id,
         { country }
       );
       if (!updatedCountry) {
@@ -52,7 +52,7 @@ module.exports = {
 
   deleteById: async (req, res) => {
     try {
-      const deletedCountry = await services.countries.deleteById(req.params.countryId);
+      const deletedCountry = await services.countries.deleteById(req.params.id);
       if (!deletedCountry) {
         res.status(404).send({ error: "Country not found" });
       } else {

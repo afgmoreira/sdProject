@@ -12,7 +12,7 @@ module.exports = {
 
   getById: async (req, res) => {
     try {
-      const circuit = await services.circuits.getById(req.params.circuitId);
+      const circuit = await services.circuits.getById(req.params.id);
       if (!circuit) {
         res.status(404).send({ error: "Circuit not found" });
       } else {
@@ -43,7 +43,7 @@ module.exports = {
   updateById: async (req, res) => {
     try {
       const { circuitRef, name, lat, lng, alt, url } = req.body;
-      const updatedCircuit = await services.circuits.updateById(req.params.circuitId, {
+      const updatedCircuit = await services.circuits.updateById(req.params.id, {
         circuitRef,
         name,
         lat,
@@ -63,7 +63,7 @@ module.exports = {
 
   deleteById: async (req, res) => {
     try {
-      const deletedCircuit = await services.circuits.deleteById(req.params.circuitId);
+      const deletedCircuit = await services.circuits.deleteById(req.params.id);
       if (!deletedCircuit) {
         res.status(404).send({ error: "Circuit not found" });
       } else {
@@ -76,7 +76,7 @@ module.exports = {
 
   getLocationById: async (req, res) => {
     try {
-      const location = await services.circuits.getLocationById(req.params.circuitId);
+      const location = await services.circuits.getLocationById(req.params.id);
       if (!location) {
         res.status(404).send({ error: "Circuit not found" });
       } else {
@@ -89,7 +89,7 @@ module.exports = {
 
   getCountryById: async (req, res) => {
     try {
-      const country = await services.circuits.getCountryById(req.params.circuitId);
+      const country = await services.circuits.getCountryById(req.params.id);
       if (!country) {
         res.status(404).send({ error: "Circuit not found" });
       } else {

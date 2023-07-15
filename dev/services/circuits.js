@@ -12,7 +12,7 @@ module.exports = {
     const circuits = await db.query(`
       SELECT *
       FROM circuits
-      WHERE circuitId = $1
+      WHERE id = $1
     `, [id]).then(q => q.rows);
 
     if (circuits.length > 0) {

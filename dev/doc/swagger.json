@@ -108,7 +108,7 @@
         }
       }
     },
-    "/circuits/{circuitId}": {
+    "/circuits/{id}": {
       "get": {
         "tags": [
           "circuit"
@@ -122,7 +122,7 @@
         ],
         "parameters": [
           {
-            "name": "circuitId",
+            "name": "id",
             "in": "path",
             "description": "ID of the circuit",
             "required": true,
@@ -163,7 +163,7 @@
         ],
         "parameters": [
           {
-            "name": "circuitId",
+            "name": "id",
             "in": "path",
             "description": "ID of the circuit",
             "required": true,
@@ -214,7 +214,7 @@
         ],
         "parameters": [
           {
-            "name": "circuitId",
+            "name": "id",
             "in": "path",
             "description": "ID of the circuit",
             "required": true,
@@ -233,7 +233,7 @@
         }
       }
     },
-    "/circuits/{circuitId}/location": {
+    "/circuits/{id}/location": {
       "get": {
         "tags": [
           "circuit"
@@ -247,7 +247,7 @@
         ],
         "parameters": [
           {
-            "name": "circuitId",
+            "name": "id",
             "in": "path",
             "description": "ID of the circuit",
             "required": true,
@@ -273,7 +273,7 @@
         }
       }
     },
-    "/circuits/{circuitId}/country": {
+    "/circuits/{id}/country": {
       "get": {
         "tags": [
           "circuit"
@@ -287,7 +287,7 @@
         ],
         "parameters": [
           {
-            "name": "circuitId",
+            "name": "id",
             "in": "path",
             "description": "ID of the circuit",
             "required": true,
@@ -388,7 +388,7 @@
         }
       }
     },
-    "/locations/{locationId}": {
+    "/locations/{id}": {
       "get": {
         "tags": [
           "location"
@@ -402,7 +402,7 @@
         ],
         "parameters": [
           {
-            "name": "locationId",
+            "name": "id",
             "in": "path",
             "description": "ID of the location",
             "required": true,
@@ -443,7 +443,7 @@
         ],
         "parameters": [
           {
-            "name": "locationId",
+            "name": "id",
             "in": "path",
             "description": "ID of the location",
             "required": true,
@@ -494,7 +494,7 @@
         ],
         "parameters": [
           {
-            "name": "locationId",
+            "name": "id",
             "in": "path",
             "description": "ID of the location",
             "required": true,
@@ -588,7 +588,7 @@
         }
       }
     },
-    "/countries/{countryId}": {
+    "/countries/{id}": {
       "get": {
         "tags": [
           "country"
@@ -602,7 +602,7 @@
         ],
         "parameters": [
           {
-            "name": "countryId",
+            "name": "id",
             "in": "path",
             "description": "ID of the country",
             "required": true,
@@ -643,7 +643,7 @@
         ],
         "parameters": [
           {
-            "name": "countryId",
+            "name": "id",
             "in": "path",
             "description": "ID of the country",
             "required": true,
@@ -694,7 +694,7 @@
         ],
         "parameters": [
           {
-            "name": "countryId",
+            "name": "id",
             "in": "path",
             "description": "ID of the country",
             "required": true,
@@ -830,7 +830,7 @@
         }
       }
     },
-    "/users/{userId}": {
+    "/users/{id}": {
       "get": {
         "tags": [
           "user"
@@ -844,7 +844,7 @@
         ],
         "parameters": [
           {
-            "name": "userId",
+            "name": "id",
             "in": "path",
             "description": "ID of the user",
             "required": true,
@@ -885,7 +885,7 @@
         ],
         "parameters": [
           {
-            "name": "userId",
+            "name": "id",
             "in": "path",
             "description": "ID of the user",
             "required": true,
@@ -919,7 +919,7 @@
         ],
         "parameters": [
           {
-            "name": "userId",
+            "name": "id",
             "in": "path",
             "description": "ID of the user",
             "required": true,
@@ -964,7 +964,7 @@
       "Circuit": {
         "type": "object",
         "properties": {
-          "circuitId": {
+          "id": {
             "type": "string"
           },
           "circuitRef": {
@@ -1051,7 +1051,7 @@
       "User": {
         "type": "object",
         "properties": {
-          "userId": {
+          "id": {
             "type": "string"
           },
           "username": {

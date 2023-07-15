@@ -12,7 +12,7 @@ module.exports = {
 
   getById: async (req, res) => {
     try {
-      const location = await services.locations.getById(req.params.locationId);
+      const location = await services.locations.getById(req.params.id);
       if (!location) {
         res.status(404).send({ error: "Location not found" });
       } else {
@@ -37,7 +37,7 @@ module.exports = {
     try {
       const { location } = req.body;
       const updatedLocation = await services.locations.updateById(
-        req.params.locationId,
+        req.params.id,
         { location }
       );
       if (!updatedLocation) {
@@ -52,7 +52,7 @@ module.exports = {
 
   deleteById: async (req, res) => {
     try {
-      const deletedLocation = await services.locations.deleteById(req.params.locationId);
+      const deletedLocation = await services.locations.deleteById(req.params.id);
       if (!deletedLocation) {
         res.status(404).send({ error: "Location not found" });
       } else {
