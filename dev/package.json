@@ -21,16 +21,20 @@
   "dependencies": {
     "cors": "^2.8.5",
     "csv-parse": "^5.4.0",
+    "csv-parser": "^3.0.0",
+    "csvtojson": "^2.0.10",
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.1",
     "knex": "^2.5.0",
     "mocha": "^10.2.0",
     "node-fetch": "^3.3.0",
-    "pg": "^8.8.0",
+    "pg": "^8.11.1",
     "pg-pool": "^3.5.2",
+    "sequelize": "^6.32.1",
     "swagger-ui-express": "^4.5.0"
   },
   "devDependencies": {

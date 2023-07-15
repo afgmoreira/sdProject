@@ -9,21 +9,21 @@ module.exports = {
     `).then(q => q.rows);
   },
 
-  getById: async (userId) => {
+  getById: async (id) => {
     const users = await db.query(`
       SELECT *
       FROM users
-      WHERE userId = $1
-    `, [userId]).then(q => q.rows);
+      WHERE id = $1
+    `, [id]).then(q => q.rows);
 
     if (users.length > 0) {
       return users[0];
     }
 
-    throw new Error(`User with userId='${userId}' not found!`);
+    throw new Error(`User with userId='${id}' not found!`);
   },
 
-  create: async ({ username, password, role }) => {
+  create: async ({ username = "", password = "", role = "" }) => {
     return db.query(`
       INSERT INTO users (username, password, role)
       VALUES ($1, $2, $3)
@@ -31,39 +31,39 @@ module.exports = {
     `, [username, password, role]).then(q => q.rows[0]);
   },
 
-  updateById: async (userId, { username, password, role }) => {
+  updateById: async (id, { username, password, role }) => {
     const users = await db.query(
       `
       UPDATE users
       SET username = $1, password = $2, role = $3
-      WHERE userId = $4
+      WHERE id = $4
       RETURNING *
     `,
-      [username, password, role, userId]
+      [username, password, role, id]
     ).then(q => q.rows);
   
     if (users.length > 0) {
       return users[0];
     }
   
-    throw new Error(`User with userId='${userId}' not found!`);
+    throw new Error(`User with userId='${id}' not found!`);
   },
   
-  deleteById: async (userId) => {
+  deleteById: async (id) => {
     const users = await db.query(
       `
       DELETE FROM users
-      WHERE userId = $1
+      WHERE id = $1
       RETURNING *
     `,
-      [userId]
+      [id]
     ).then(q => q.rows);
   
     if (users.length > 0) {
       return users[0];
     }
   
-    throw new Error(`User with userId='${userId}' not found!`);
+    throw new Error(`User with userId='${id}' not found!`);
   },
 
 

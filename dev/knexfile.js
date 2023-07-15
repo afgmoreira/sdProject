@@ -8,10 +8,8 @@ module.exports = {
         database: 'sd',
       },
       migrations: {
-        directory: './migrations',
-      },
-      seeds: {
-        directory: './seeds',
+        
+        tableName: "knex_migrations"
       },
     },
   };

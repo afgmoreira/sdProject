@@ -8,18 +8,18 @@ module.exports = {
     `).then(q => q.rows);
   },
 
-  getById: async (circuitId) => {
+  getById: async (id) => {
     const circuits = await db.query(`
       SELECT *
       FROM circuits
       WHERE circuitId = $1
-    `, [circuitId]).then(q => q.rows);
+    `, [id]).then(q => q.rows);
 
     if (circuits.length > 0) {
       return circuits[0];
     }
 
-    throw new Error(`Circuit with circuitId='${circuitId}' not found!`);
+    throw new Error(`Circuit with circuitId='${id}' not found!`);
   },
 
   create: async ({ circuitRef, name, lat, lng, alt, url }) => {
@@ -30,36 +30,36 @@ module.exports = {
     `, [circuitRef, name, lat, lng, alt, url]).then(q => q.rows[0]);
   },
 
-  updateById: async (circuitId, { circuitRef, name, lat, lng, alt, url }) => {
+  updateById: async (id, { circuitRef, name, lat, lng, alt, url }) => {
     return db.query(`
       UPDATE circuits
       SET circuitRef = $2, name = $3, lat = $4, lng = $5, alt = $6, url = $7
-      WHERE circuitId = $1
+      WHERE id = $1
       RETURNING *
-    `, [circuitId, circuitRef, name, lat, lng, alt, url]).then(q => q.rows[0]);
+    `, [id, circuitRef, name, lat, lng, alt, url]).then(q => q.rows[0]);
   },
 
-  deleteById: async (circuitId) => {
+  deleteById: async (id) => {
     return db.query(`
       DELETE FROM circuits
-      WHERE circuitId = $1
+      WHERE id = $1
       RETURNING *
-    `, [circuitId]).then(q => q.rows[0]);
+    `, [id]).then(q => q.rows[0]);
   },
 
-  getLocationById: async (circuitId) => {
+  getLocationById: async (id) => {
     return db.query(`
       SELECT *
       FROM locations
-      WHERE circuitId = $1
-    `, [circuitId]).then(q => q.rows);
+      WHERE id = $1
+    `, [id]).then(q => q.rows);
   },
 
-  getCountryById: async (circuitId) => {
+  getCountryById: async (id) => {
     return db.query(`
       SELECT *
       FROM countries
-      WHERE circuitId = $1
-    `, [circuitId]).then(q => q.rows);
+      WHERE id = $1
+    `, [id]).then(q => q.rows);
   },
 };
