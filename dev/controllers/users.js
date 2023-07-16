@@ -53,7 +53,7 @@ module.exports = {
         return res.status(401).send({ error: "Unauthorized: Invalid username or password" });
       }
 
-      const token = jwt.sign({ id: user.userId, role: user.role }, process.env.JWT_SECRET, {
+      const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
         expiresIn: "1h",
       });
 
