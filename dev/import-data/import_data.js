@@ -37,7 +37,7 @@ fileStream
         });
 
         const Circuit = sequelize.define('circuits', {
-          circuitRef: DataTypes.STRING,
+          circuit_ref: DataTypes.STRING,
           name: DataTypes.STRING,
           lat: DataTypes.STRING,
           lng: DataTypes.STRING,
@@ -66,7 +66,7 @@ fileStream
 
           await Circuit.create(
             {
-              circuitRef: record.circuitRef,
+              circuit_ref: record.circuit_ref,
               name: record.name,
               lat: record.lat,
               lng: record.lng,

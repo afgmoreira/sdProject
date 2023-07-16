@@ -25,9 +25,9 @@ module.exports = {
 
   create: async (req, res) => {
     try {
-      const { circuitRef, name, lat, lng, alt, url } = req.body;
+      const { circuit_ref, name, lat, lng, alt, url } = req.body;
       const newCircuit = await services.circuits.create({
-        circuitRef,
+        circuit_ref,
         name,
         lat,
         lng,
@@ -43,9 +43,9 @@ module.exports = {
   updateById: async (req, res) => {
     try {
       const { id } = req.params;
-      const { circuitRef, name, lat, lng, alt, url } = req.body;
+      const { circuit_ref, name, lat, lng, alt, url } = req.body;
       const updatedCircuit = await services.circuits.updateById(req.params.id, {
-        circuitRef,
+        circuit_ref,
         name,
         lat,
         lng,

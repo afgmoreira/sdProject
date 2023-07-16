@@ -66,35 +66,35 @@ function checkRole(checkedRole) {
   { method: "get", url: "version", cb: controllers.version.get },
 
   // Circuits Access Methods
-  { method: "get", url: "circuits", cb: controllers.circuits.getAll, requiredRole: "viewer" },
-  { method: "get", url: "circuits/:id", cb: controllers.circuits.getById, requiredRole: "viewer" },
-  { method: "post", url: "circuits", cb: controllers.circuits.create, requiredRole: "editor" },
-  { method: "put", url: "circuits/:id", cb: controllers.circuits.updateById, requiredRole: "editor" },
-  { method: "delete", url: "circuits/:id", cb: controllers.circuits.deleteById, requiredRole: "editor" },
-  { method: "get", url: "circuits/:id/location", cb: controllers.circuits.getLocationById, requiredRole: "viewer" },
-  { method: "get", url: "circuits/:id/country", cb: controllers.circuits.getCountryById, requiredRole: "viewer" },
+  { method: "get", url: "circuits", cb: controllers.circuits.getAll, checkedRole: "viewer" },
+  { method: "get", url: "circuits/:id", cb: controllers.circuits.getById, checkedRole: "viewer" },
+  { method: "post", url: "circuits", cb: controllers.circuits.create, checkedRole: "editor" },
+  { method: "put", url: "circuits/:id", cb: controllers.circuits.updateById, checkedRole: "editor" },
+  { method: "delete", url: "circuits/:id", cb: controllers.circuits.deleteById, checkedRole: "editor" },
+  { method: "get", url: "circuits/:id/location", cb: controllers.circuits.getLocationById, checkedRole: "viewer" },
+  { method: "get", url: "circuits/:id/country", cb: controllers.circuits.getCountryById, checkedRole: "viewer" },
 
   // Locations Access Methods
-  { method: "get", url: "locations", cb: controllers.locations.getAll, requiredRole: "viewer" },
-  { method: "get", url: "locations/:id", cb: controllers.locations.getById, requiredRole: "viewer" },
-  { method: "post", url: "locations", cb: controllers.locations.create, requiredRole: "editor" },
-  { method: "put", url: "locations/:id", cb: controllers.locations.updateById, requiredRole: "editor" },
-  { method: "delete", url: "locations/:id", cb: controllers.locations.deleteById, requiredRole: "editor" },
+  { method: "get", url: "locations", cb: controllers.locations.getAll, checkedRole: "viewer" },
+  { method: "get", url: "locations/:id", cb: controllers.locations.getById, checkedRole: "viewer" },
+  { method: "post", url: "locations", cb: controllers.locations.create, checkedRole: "editor" },
+  { method: "put", url: "locations/:id", cb: controllers.locations.updateById, checkedRole: "editor" },
+  { method: "delete", url: "locations/:id", cb: controllers.locations.deleteById, checkedRole: "editor" },
 
   // Countries Access Methods
-  { method: "get", url: "countries", cb: controllers.countries.getAll, requiredRole: "viewer" },
-  { method: "get", url: "countries/:id", cb: controllers.countries.getById, requiredRole: "viewer" },
-  { method: "post", url: "countries", cb: controllers.countries.create, requiredRole: "editor" },
-  { method: "put", url: "countries/:id", cb: controllers.countries.updateById, requiredRole: "editor" },
-  { method: "delete", url: "countries/:id", cb: controllers.countries.deleteById, requiredRole: "editor" },
+  { method: "get", url: "countries", cb: controllers.countries.getAll, checkedRole: "viewer" },
+  { method: "get", url: "countries/:id", cb: controllers.countries.getById, checkedRole: "viewer" },
+  { method: "post", url: "countries", cb: controllers.countries.create, checkedRole: "editor" },
+  { method: "put", url: "countries/:id", cb: controllers.countries.updateById, checkedRole: "editor" },
+  { method: "delete", url: "countries/:id", cb: controllers.countries.deleteById, checkedRole: "editor" },
 
   // Users Access Methods
   { method: "post", url: "users/login", cb: controllers.users.login },
-  { method: "get", url: "users", cb: controllers.users.getAll, requiredRole: "admin" },
-  { method: "get", url: "users/:id", cb: controllers.users.getUserById, requiredRole: "admin" },
-  { method: "post", url: "users", cb: controllers.users.create, requiredRole: "admin" },
-  { method: "put", url: "users/:id", cb: controllers.users.updateById, requiredRole: "admin" },
-  { method: "delete", url: "users/:id", cb: controllers.users.deleteById, requiredRole: "admin" },
+  { method: "get", url: "users", cb: controllers.users.getAll, checkedRole: "admin" },
+  { method: "get", url: "users/:id", cb: controllers.users.getUserById, checkedRole: "admin" },
+  { method: "post", url: "users", cb: controllers.users.create},
+  { method: "put", url: "users/:id", cb: controllers.users.updateById, checkedRole: "admin" },
+  { method: "delete", url: "users/:id", cb: controllers.users.deleteById, checkedRole: "admin" },
 
 ].forEach(({ method, url, checkedRole, cb }) => {
   app[method](apiUrl(url), checkRole(checkedRole), cb);

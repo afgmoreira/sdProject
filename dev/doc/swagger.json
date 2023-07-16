@@ -967,7 +967,7 @@
           "id": {
             "type": "string"
           },
-          "circuitRef": {
+          "circuit_ref": {
             "type": "string"
           },
           "name": {
@@ -980,7 +980,7 @@
             "type": "string"
           },
           "alt": {
-            "type": "number"
+            "type": "string"
           },
           "url": {
             "type": "string"
@@ -990,7 +990,7 @@
       "CircuitInput": {
         "type": "object",
         "properties": {
-          "circuitRef": {
+          "circuit_ref": {
             "type": "string"
           },
           "name": {
@@ -1003,7 +1003,7 @@
             "type": "string"
           },
           "alt": {
-            "type": "number"
+            "type": "string"
           },
           "url": {
             "type": "string"

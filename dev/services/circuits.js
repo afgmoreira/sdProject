@@ -22,21 +22,21 @@ module.exports = {
     throw new Error(`Circuit with circuitId='${id}' not found!`);
   },
 
-  create: async ({ circuitRef, name, lat, lng, alt, url }) => {
+  create: async ({ circuit_ref, name, lat, lng, alt, url }) => {
     return db.query(`
-      INSERT INTO circuits (circuitRef, name, lat, lng, alt, url)
+      INSERT INTO circuits (circuit_ref, name, lat, lng, alt, url)
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *
-    `, [circuitRef, name, lat, lng, alt, url]).then(q => q.rows[0]);
+    `, [circuit_ref, name, lat, lng, alt, url]).then(q => q.rows[0]);
   },
 
-  updateById: async (id, { circuitRef, name, lat, lng, alt, url }) => {
+  updateById: async (id, { circuit_ref, name, lat, lng, alt, url }) => {
     return db.query(`
       UPDATE circuits
-      SET circuitRef = $2, name = $3, lat = $4, lng = $5, alt = $6, url = $7
+      SET circuit_ref = $2, name = $3, lat = $4, lng = $5, alt = $6, url = $7
       WHERE id = $1
       RETURNING *
-    `, [id, circuitRef, name, lat, lng, alt, url]).then(q => q.rows[0]);
+    `, [id, circuit_ref, name, lat, lng, alt, url]).then(q => q.rows[0]);
   },
 
   deleteById: async (id) => {
