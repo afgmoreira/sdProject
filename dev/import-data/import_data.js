@@ -46,7 +46,7 @@ fileStream
         });
 
         // Drop existing tables before synchronization
-        await Country.drop({ transaction, cascade: true });
+       await Country.drop({ transaction, cascade: true });
         await Location.drop({ transaction, cascade: true });
         await Circuit.drop({ transaction, cascade: true });
 

@@ -42,7 +42,6 @@ module.exports = {
 
   updateById: async (req, res) => {
     try {
-      const { id } = req.params;
       const { circuit_ref, name, lat, lng, alt, url } = req.body;
       const updatedCircuit = await services.circuits.updateById(req.params.id, {
         circuit_ref,
@@ -50,8 +49,7 @@ module.exports = {
         lat,
         lng,
         alt,
-        url,
-        id
+        url
       });
       if (!updatedCircuit) {
         res.status(404).send({ error: "Circuit not found" });

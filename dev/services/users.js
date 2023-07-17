@@ -23,7 +23,7 @@ module.exports = {
     throw new Error(`User with userId='${id}' not found!`);
   },
 
-  create: async ({ username = "", password = "", role = "" }) => {
+  create: async ({ username, password, role }) => {
     return db.query(`
       INSERT INTO users (username, password, role)
       VALUES ($1, $2, $3)
