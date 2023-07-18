@@ -8,7 +8,6 @@ module.exports = {
         database: 'sd',
       },
       migrations: {
-        
         tableName: "knex_migrations"
       },
     },

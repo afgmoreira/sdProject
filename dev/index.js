@@ -30,27 +30,23 @@ function checkRole(checkedRole) {
   };
 
   return (req, res, next) => {
-    // Check if the required role is specified
+   
     if (!checkedRole) {
       return next();
     }
 
-    // Get the token from the Authorization header
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
 
-    // If token is not provided, return Unauthorized
     if (!token) {
       return res.status(401).send("Unauthorized: Token not provided");
     }
 
     try {
-      // Verify the token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      // Check if the user role is equal to or higher than the required role
       if (roles[decoded.role] >= roles[checkedRole]) {
-        req.user = decoded; // Attach user information to the request object
+        req.user = decoded; 
         return next();
       }
 
@@ -62,10 +58,10 @@ function checkRole(checkedRole) {
 }
 
 [
-  // Add your routes here with requiredRole parameter
+  
   { method: "get", url: "version", cb: controllers.version.get },
 
-  // Circuits Access Methods
+  // Circuits 
   { method: "get", url: "circuits", cb: controllers.circuits.getAll, checkedRole: "view" },
   { method: "get", url: "circuits/:id", cb: controllers.circuits.getById, checkedRole: "view" },
   { method: "post", url: "circuits", cb: controllers.circuits.create, checkedRole: "edit" },
@@ -74,21 +70,21 @@ function checkRole(checkedRole) {
   { method: "get", url: "circuits/:id/location", cb: controllers.circuits.getLocationById, checkedRole: "view" },
   { method: "get", url: "circuits/:id/country", cb: controllers.circuits.getCountryById, checkedRole: "view" },
 
-  // Locations Access Methods
+  // Locations 
   { method: "get", url: "locations", cb: controllers.locations.getAll, checkedRole: "view" },
   { method: "get", url: "locations/:id", cb: controllers.locations.getById, checkedRole: "view" },
   { method: "post", url: "locations", cb: controllers.locations.create, checkedRole: "edit" },
   { method: "put", url: "locations/:id", cb: controllers.locations.updateById, checkedRole: "edit" },
   { method: "delete", url: "locations/:id", cb: controllers.locations.deleteById, checkedRole: "edit" },
 
-  // Countries Access Methods
+  // Countries 
   { method: "get", url: "countries", cb: controllers.countries.getAll, checkedRole: "view" },
   { method: "get", url: "countries/:id", cb: controllers.countries.getById, checkedRole: "view" },
   { method: "post", url: "countries", cb: controllers.countries.create, checkedRole: "edit" },
   { method: "put", url: "countries/:id", cb: controllers.countries.updateById, checkedRole: "edit" },
   { method: "delete", url: "countries/:id", cb: controllers.countries.deleteById, checkedRole: "edit" },
 
-  // Users Access Methods
+  // Users 
   { method: "post", url: "users/login", cb: controllers.users.login },
   { method: "get", url: "users", cb: controllers.users.getAll, checkedRole: "admin" },
   { method: "get", url: "users/:id", cb: controllers.users.getUserById, checkedRole: "admin" },
